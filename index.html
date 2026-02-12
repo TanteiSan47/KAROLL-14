@@ -8,16 +8,15 @@
 <style>
 body {
     margin: 0;
-    padding: 0;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
     text-align: center;
     color: white;
-    overflow: hidden;
 }
 
 .card {
@@ -29,16 +28,19 @@ body {
     max-width: 500px;
 }
 
+.hidden {
+    display: none;
+}
+
 button {
     margin-top: 20px;
     padding: 12px 25px;
-    border: none;
     border-radius: 25px;
+    border: none;
     background: white;
     color: #ff4b6e;
-    font-size: 1em;
     cursor: pointer;
-    transition: 0.3s;
+    font-size: 1em;
 }
 
 button:hover {
@@ -46,20 +48,38 @@ button:hover {
     color: white;
 }
 
-.hidden {
-    display: none;
-}
-
-.tulip {
-    position: absolute;
-    font-size: 30px;
+/* Tulip grande */
+#bigTulip {
+    font-size: 120px;
     cursor: pointer;
-    animation: fall linear forwards;
+    transition: transform 0.3s;
 }
 
-@keyframes fall {
-    0% { transform: translateY(-10vh); }
-    100% { transform: translateY(100vh); }
+#bigTulip:hover {
+    transform: scale(1.1);
+}
+
+/* Burbujas */
+.bubble {
+    position: absolute;
+    background: rgba(255,255,255,0.9);
+    color: #ff4b6e;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: floatUp 4s ease forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-200px);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -82,8 +102,9 @@ button:hover {
 </div>
 
 <!-- PAGE 2 -->
-<div class="card hidden" id="page2">
-    <h1>Toca los tulipanes 🌷</h1>
+<div class="hidden" id="page2">
+    <h1>Toca el tulipán 🌷</h1>
+    <div id="bigTulip" onclick="createBubble()">🌷</div>
 </div>
 
 <audio id="bgMusic" loop>
@@ -92,35 +113,32 @@ button:hover {
 
 <script>
 const messages = [
-    "Me importas mucho ❤️",
+    "Eres mi paz ❤️",
     "Mi melocotón hermoso 🍑",
-    "Gracias por estar en mi vida 🌷",
-    "Ojalá el próximo San Valentín sea juntos 💕"
+    "Me haces sonreír incluso en días difíciles 🌸",
+    "Quiero abrazarte fuerte 💕",
+    "Ojalá el próximo 14 sea juntos 🌷"
 ];
 
 function goToPage2() {
     document.getElementById("bgMusic").play();
     document.getElementById("page1").classList.add("hidden");
     document.getElementById("page2").classList.remove("hidden");
-    setInterval(createTulip, 1000);
 }
 
-function createTulip() {
-    const tulip = document.createElement("div");
-    tulip.classList.add("tulip");
-    tulip.innerHTML = "🌷";
-    tulip.style.left = Math.random() * 100 + "vw";
-    tulip.style.animationDuration = (Math.random() * 3 + 4) + "s";
+function createBubble() {
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+    bubble.innerHTML = messages[Math.floor(Math.random() * messages.length)];
 
-    tulip.onclick = function() {
-        alert(messages[Math.floor(Math.random() * messages.length)]);
-    };
+    bubble.style.left = (window.innerWidth / 2 - 100 + Math.random()*200) + "px";
+    bubble.style.top = (window.innerHeight / 2) + "px";
 
-    document.body.appendChild(tulip);
+    document.body.appendChild(bubble);
 
     setTimeout(() => {
-        tulip.remove();
-    }, 7000);
+        bubble.remove();
+    }, 4000);
 }
 </script>
 

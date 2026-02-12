@@ -3,89 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Feliz 14 Amor ❤️</title>
+<title>Para Mi Amor ❤️</title>
 
 <style>
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to top, #2b1055, #7597de);
-    overflow: hidden;
-    color: white;
-    text-align: center;
-}
-
-.slide {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: opacity 1s;
+    height: 100vh;
+    text-align: center;
+    color: white;
+    overflow: hidden;
 }
 
-.hidden {
-    opacity: 0;
-    pointer-events: none;
+.card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 500px;
 }
 
 button {
     margin-top: 20px;
     padding: 12px 25px;
-    border-radius: 30px;
     border: none;
+    border-radius: 25px;
     background: white;
-    color: #2b1055;
+    color: #ff4b6e;
     font-size: 1em;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: pink;
+    background: #ff4b6e;
+    color: white;
 }
 
-.flower {
+.hidden {
+    display: none;
+}
+
+.tulip {
     position: absolute;
-    font-size: 25px;
+    font-size: 30px;
     cursor: pointer;
     animation: fall linear forwards;
 }
 
 @keyframes fall {
-    0% {transform: translateY(-10vh);}
-    100% {transform: translateY(100vh);}
-}
-
-.groundFlower {
-    position: absolute;
-    font-size: 25px;
+    0% { transform: translateY(-10vh); }
+    100% { transform: translateY(100vh); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- SLIDE 1 -->
-<div class="slide" id="slide1">
-    <h1>Feliz 14 ❤️</h1>
-    <p>Esto empezó como una prueba... pero tú no eres ninguna prueba.</p>
-    <button onclick="nextSlide(2)">Siguiente 💌</button>
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+    <h1>Feliz San Valentín ❤️</h1>
+    <h2>Para mi vida, mi amor, mi melocotón 🍑</h2>
+    <p>
+        Hoy quiero abrazarte fuerte,
+        aunque sea en la distancia.
+        Espero que el próximo 14
+        podamos estar juntos,
+        sin pantallas,
+        solo tú y yo.
+    </p>
+    <button onclick="goToPage2()">Entrar 🌷</button>
 </div>
 
-<!-- SLIDE 2 -->
-<div class="slide hidden" id="slide2">
-    <h1>Quería hacer algo diferente</h1>
-    <p>No solo palabras... sino algo que se sienta especial.</p>
-    <button onclick="nextSlide(3)">Siguiente 🌹</button>
-</div>
-
-<!-- SLIDE 3 -->
-<div class="slide hidden" id="slide3">
-    <h1>Toca las flores 🌸</h1>
-    <p>Cada una tiene algo que decir...</p>
-    <button onclick="startFlowers()">Empezar 🌷</button>
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+    <h1>Toca los tulipanes 🌷</h1>
 </div>
 
 <audio id="bgMusic" loop>
@@ -93,49 +91,38 @@ button:hover {
 </audio>
 
 <script>
-function nextSlide(number) {
-    document.querySelectorAll(".slide").forEach(s => s.classList.add("hidden"));
-    document.getElementById("slide" + number).classList.remove("hidden");
-}
-
-function startFlowers() {
-    document.getElementById("bgMusic").play();
-    setInterval(createFlower, 800);
-}
-
 const messages = [
-    "Me importas más de lo que imaginas ❤️",
-    "Esto lo hago porque me nace 💕",
-    "No estás sola 🌸",
-    "Aquí estoy, incluso en silencio 🌷",
-    "Lo poco o mucho, es sincero 💖"
+    "Me importas mucho ❤️",
+    "Mi melocotón hermoso 🍑",
+    "Gracias por estar en mi vida 🌷",
+    "Ojalá el próximo San Valentín sea juntos 💕"
 ];
 
-function createFlower() {
-    const flower = document.createElement("div");
-    flower.classList.add("flower");
-    flower.innerHTML = "🌸";
-    flower.style.left = Math.random() * 100 + "vw";
-    flower.style.animationDuration = (Math.random() * 3 + 4) + "s";
+function goToPage2() {
+    document.getElementById("bgMusic").play();
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+    setInterval(createTulip, 1000);
+}
 
-    flower.onclick = function() {
+function createTulip() {
+    const tulip = document.createElement("div");
+    tulip.classList.add("tulip");
+    tulip.innerHTML = "🌷";
+    tulip.style.left = Math.random() * 100 + "vw";
+    tulip.style.animationDuration = (Math.random() * 3 + 4) + "s";
+
+    tulip.onclick = function() {
         alert(messages[Math.floor(Math.random() * messages.length)]);
     };
 
-    document.body.appendChild(flower);
+    document.body.appendChild(tulip);
 
     setTimeout(() => {
-        const ground = document.createElement("div");
-        ground.classList.add("groundFlower");
-        ground.innerHTML = "🌸";
-        ground.style.left = flower.style.left;
-        ground.style.bottom = "0px";
-        document.body.appendChild(ground);
-        flower.remove();
+        tulip.remove();
     }, 7000);
 }
 </script>
 
 </body>
 </html>
-

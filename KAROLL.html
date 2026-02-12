@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Ti ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to top, #2b1055, #7597de);
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    background: white;
+    color: #2b1055;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background: pink;
+}
+
+.flower {
+    position: absolute;
+    font-size: 25px;
+    cursor: pointer;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {transform: translateY(-10vh);}
+    100% {transform: translateY(100vh);}
+}
+
+.groundFlower {
+    position: absolute;
+    font-size: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SLIDE 1 -->
+<div class="slide" id="slide1">
+    <h1>Feliz 14 ❤️</h1>
+    <p>Esto empezó como una prueba... pero tú no eres ninguna prueba.</p>
+    <button onclick="nextSlide(2)">Siguiente 💌</button>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide hidden" id="slide2">
+    <h1>Quería hacer algo diferente</h1>
+    <p>No solo palabras... sino algo que se sienta especial.</p>
+    <button onclick="nextSlide(3)">Siguiente 🌹</button>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide hidden" id="slide3">
+    <h1>Toca las flores 🌸</h1>
+    <p>Cada una tiene algo que decir...</p>
+    <button onclick="startFlowers()">Empezar 🌷</button>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function nextSlide(number) {
+    document.querySelectorAll(".slide").forEach(s => s.classList.add("hidden"));
+    document.getElementById("slide" + number).classList.remove("hidden");
+}
+
+function startFlowers() {
+    document.getElementById("bgMusic").play();
+    setInterval(createFlower, 800);
+}
+
+const messages = [
+    "Me importas más de lo que imaginas ❤️",
+    "Esto lo hago porque me nace 💕",
+    "No estás sola 🌸",
+    "Aquí estoy, incluso en silencio 🌷",
+    "Lo poco o mucho, es sincero 💖"
+];
+
+function createFlower() {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.innerHTML = "🌸";
+    flower.style.left = Math.random() * 100 + "vw";
+    flower.style.animationDuration = (Math.random() * 3 + 4) + "s";
+
+    flower.onclick = function() {
+        alert(messages[Math.floor(Math.random() * messages.length)]);
+    };
+
+    document.body.appendChild(flower);
+
+    setTimeout(() => {
+        const ground = document.createElement("div");
+        ground.classList.add("groundFlower");
+        ground.innerHTML = "🌸";
+        ground.style.left = flower.style.left;
+        ground.style.bottom = "0px";
+        document.body.appendChild(ground);
+        flower.remove();
+    }, 7000);
+}
+</script>
+
+</body>
+</html>
